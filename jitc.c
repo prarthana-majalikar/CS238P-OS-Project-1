@@ -86,7 +86,7 @@ void jitc_close(struct jitc *jitc) {
 }
 
 long jitc_lookup(struct jitc *jitc, const char *symbol) {
-    long (*func)(double (*)(double));  
+    long (*evaluate_func_ptr)(double (*)(double));  
     const char *error; 
     if (!jitc || !jitc->handle) {
         TRACE("Invalid JITC handle");
@@ -95,14 +95,14 @@ long jitc_lookup(struct jitc *jitc, const char *symbol) {
 
     dlerror();
 
-    func = (long (*)(double (*)(double)))dlsym(jitc->handle, symbol);
+    evaluate_func_ptr = (long (*)(double (*)(double)))dlsym(jitc->handle, symbol);
     error = dlerror();
     if (error) {
         fprintf(stderr, "Failed to find symbol: %s\n", error);
         return 0;
     }
 
-    return (long)func;
+    return (long)evaluate_func_ptr;
 }
 
 /**
