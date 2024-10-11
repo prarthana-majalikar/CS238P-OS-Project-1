@@ -121,7 +121,7 @@ main(int argc, char *argv[])
 
 	if (jitc_compile(CFILE, SOFILE)) {
 		file_delete(CFILE);
-		TRACE(0);
+		TRACE("Compilation failed");
 		return -1;
 	}
 	file_delete(CFILE);
